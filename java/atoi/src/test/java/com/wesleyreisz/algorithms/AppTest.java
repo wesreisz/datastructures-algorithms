@@ -1,5 +1,6 @@
 package com.wesleyreisz.algorithms;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -9,12 +10,10 @@ import org.junit.Test;
  */
 public class AppTest 
 {
-    /**
-     * Rigorous Test :-)
-     */
     @Test
     public void shouldAnswerWithTrue()
     {
-        assertTrue( true );
+        assertEquals( 123 , StringUtil.atoi("abc") );
+        assertEquals( 419 , StringUtil.atoi("DaI") );
     }
 }
