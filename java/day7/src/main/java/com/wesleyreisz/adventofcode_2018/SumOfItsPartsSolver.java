@@ -92,10 +92,16 @@ public class SumOfItsPartsSolver
     }
 
     private void processWorkPredecessors(List<SleighNode> listOfNodes, List<SleighNode> sortedNodes) {
-        char tmp = listOfNodes.get(0).predecessor;
+
+        List<SleighNode> tmpListOfNodes = listOfNodes.stream()
+                .filter(n -> n.work==listOfNodes.get(0).work)
+                .sorted((o1,o2)->o1.predecessor-o2.predecessor)
+                .collect(Collectors.toList());
+
+        char tmp = tmpListOfNodes.get(0).predecessor;
 
         //find a tmp list of all predessors matching the work field
-        List<SleighNode> tmpListOfNodes = listOfNodes.stream()
+        tmpListOfNodes = listOfNodes.stream()
                 .filter(n -> n.predecessor==tmp)
                 .collect(Collectors.toList());
 
