@@ -39,11 +39,7 @@ public class SumOfItsPartsSolverTest
 
     @Test
     public void testConvertStringsToNodes(){
-        List<String> instructionList = new ArrayList<>();
-        instructionList.add("Step C must be finished before step A can begin.");
-        instructionList.add("Step C must be finished before step F can begin.");
-        instructionList.add("Step A must be finished before step B can begin.");
-        instructionList.add("Step A must be finished before step D can begin.");
+        List<String> instructionList = buildTestList();
         SumOfItsPartsSolver ss = new SumOfItsPartsSolver();
         List<SleighNode> results = ss.loadNodes(instructionList);
         assertNotNull(results);
@@ -51,5 +47,29 @@ public class SumOfItsPartsSolverTest
         SleighNode node = results.get(3);
         assertEquals('A',node.predecessor);
         assertEquals('D',node.work);
+    }
+
+    @Test
+    public void testNodeSort(){
+        List<String> instructionList = buildTestList();
+        SumOfItsPartsSolver ss = new SumOfItsPartsSolver();
+        List<SleighNode> sortedList = ss.sortNodes(ss.loadNodes(instructionList));
+        assertNotNull(sortedList);
+        assertEquals('A',sortedList.get(0).work);
+        assertEquals('C',sortedList.get(0).predecessor);
+        assertEquals('C',sortedList.get(1).predecessor);
+        assertEquals('F',sortedList.get(1).work);
+        assertEquals('B',sortedList.get(2).work);
+        assertEquals('A',sortedList.get(2).predecessor);
+    }
+
+    /*helpers*/
+    private List<String> buildTestList() {
+        List<String> instructionList = new ArrayList<>();
+        instructionList.add("Step C must be finished before step F can begin.");
+        instructionList.add("Step A must be finished before step B can begin.");
+        instructionList.add("Step C must be finished before step A can begin.");
+        instructionList.add("Step A must be finished before step D can begin.");
+        return instructionList;
     }
 }
