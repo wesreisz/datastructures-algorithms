@@ -14,6 +14,7 @@ public class SumOfItsPartsSolver
 {
     private static final String VOCAB_PATTERN_MATCHER = "Step (\\w) must be finished before step (\\w) can begin.";
     private List<SleighNode> workInstructions;
+    Set<Character> instructionOrder;
 
     public static void main( String[] args )
     {
@@ -68,16 +69,6 @@ public class SumOfItsPartsSolver
                     return new SleighNode(x,y);
                 }).collect(Collectors.toList());
         return allSteps;
-
-        /*
-        line -> {
-            Matcher matcher = pattern.matcher(line);
-            matcher.find();
-            char x = matcher.group(1).charAt(0);
-            char y = matcher.group(2).charAt(1);
-            return new SleighNode(x,y);
-        }
-         */
     }
     protected List<SleighNode> sortNodes(List<SleighNode> listOfNodes) {
         //sort on work field
@@ -90,7 +81,6 @@ public class SumOfItsPartsSolver
 
         return sortedNodes;
     }
-
     private void processWorkPredecessors(List<SleighNode> listOfNodes, List<SleighNode> sortedNodes) {
 
         List<SleighNode> tmpListOfNodes = listOfNodes.stream()
@@ -115,13 +105,21 @@ public class SumOfItsPartsSolver
     }
 
     protected void part2(){
-        //print steps
+        instructionOrder = new LinkedHashSet<Character>();
+        for (SleighNode instruction : workInstructions){
+            instructionOrder.add(instruction.predecessor);
+        }
     }
 
     private void printWorkInstructions(){
         for (SleighNode instruction : workInstructions){
             System.out.println(String.format("Step %s must be finished before step %s can begin.",instruction.predecessor,instruction.work));
         }
+
+        for (Character code : instructionOrder){
+            System.out.print(code);
+        }
+        System.out.println(workInstructions.get(workInstructions.size()-1).work);
     }
 
 }
