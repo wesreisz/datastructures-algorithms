@@ -8,13 +8,14 @@ public class ChronalCalibration {
 
     private ChronalCalibration(){
     }
-    private static ChronalCalibration getInstance(){
+    public static ChronalCalibration getInstance(){
         if (isNull(chronalCalibration)){
             chronalCalibration = new ChronalCalibration();
         }
         return chronalCalibration;
     }
-    public void adjustCalibration(){
+    public void adjustCalibration(int adjustement){
+        sum += adjustement;
     }
     public int currentCalibration(){
         return sum;
